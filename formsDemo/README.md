@@ -26,9 +26,6 @@ django-userform provides a minimal yet scalable architecture for user data colle
 - Demo project included  
 - Modular design  
 
-## 🎬 Demo
-Visit: http://127.0.0.1:8000/
-
 ## 📂 Project Structure
 django-userform/
 ├── formsApp/
