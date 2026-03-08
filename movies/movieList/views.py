@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from movieList.models import movie
 from movieList.forms import movieCreation
 
@@ -12,5 +12,5 @@ def addMovies(request):
         movie_add=movieCreation(request.POST)
         if movie_add.is_valid():
             movie_add.save()
-        return listView(request)
+            return redirect('list')
     return render(request,'movieList/addmovie.html',{'movie_add':movie_add})
