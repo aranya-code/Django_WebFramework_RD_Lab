@@ -3,10 +3,12 @@ from movieList.models import movie
 from movieList.forms import movieCreation
 
 def listView(request):
+    # List all the movies
     all_movies = movie.objects.all()
     return render(request, 'movieList/index.html',{'all_movies':all_movies})
 
 def addMovies(request):
+    # View for adding movies
     movie_add = movieCreation()
     if request.method == 'POST':
         movie_add=movieCreation(request.POST)

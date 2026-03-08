@@ -1,63 +1,86 @@
-# 🎬 Movies Django Project
+# Movies App – Django Web Framework
 
-A simple Django web application for managing movies.  
-This project demonstrates core Django concepts such as models, views, forms, templates, and URL routing.
+## Overview
 
----
+The Movies App is a simple Django application that demonstrates how to build a movie listing web application using the Django framework. The project showcases core Django concepts such as models, views, templates, and URL routing to display movie data.
 
-## 🚀 Features
-
-- View list of movies
-- Add new movies using Django forms
-- Uses Django ORM for database operations
-- Server-side rendering with Django templates
-- Environment-based configuration using `.env`
+This project is part of the Django Web Framework RD Lab and is designed to help learners understand how Django applications are structured and how data flows from the backend to the frontend.
 
 ---
 
-## 🛠 Tech Stack
+## Features
 
-- **Backend:** Django 5.x
-- **Language:** Python 3.x
-- **Database:** SQLite (development)
-- **Frontend:** Django Templates (HTML)
+- Display a list of movies
+- View movie details
+- Django template rendering
+- URL routing with Django
+- Organized Django application structure
 
 ---
 
-## 📂 Project Structure
+## Tech Stack
+
+Language: Python  
+Framework: Django  
+Frontend: HTML  
+Database: SQLite (default Django database)
+
+---
+
+## Project Structure
+```
 
 movies/
-├── movieList/
-│ ├── migrations/
-│ ├── templates/
-│ │ └── movieList/
-│ │ ├── index.html
-│ │ └── addmovie.html
-│ ├── models.py
-│ ├── views.py
-│ ├── forms.py
-│ └── urls.py
-├── movies/
-│ ├── settings.py
-│ ├── urls.py
-│ └── wsgi.py
-├── manage.py
-└── .env
+│
+├── movies/                 # Project configuration folder
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── asgi.py
+│   └── wsgi.py
+│
+├── moviesApp/              # Django application
+│   ├── migrations/
+│   │   └── __init__.py
+│   │
+│   ├── templates/
+│   │   └── moviesApp/
+│   │
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── views.py
+│   ├── urls.py
+│   └── tests.py
+│
+├── db.sqlite3              # SQLite database
+├── manage.py               # Django project manager
+└── README.md
+```
+---
 
 
-🔗 URL Endpoints
+## Learning Objectives
 
-| URL           | Description |
-| ------------- | ----------- |
-| `/`           | Movie list  |
-| `/moviesAdd/` | Add movie   |
-| `/admin/`     | Admin panel |
+- Understand Django project and app structure
+- Create models and database migrations
+- Render templates in Django
+- Handle URLs and views
+- Build simple web applications with Django
 
+---
 
-🧪 Learning Objectives
+## Future Improvements
 
-- Django project vs app structure
-- Function-based views (FBV)
-- Django forms and validation
-- URL routing
-- Environment variables in Django
+- Add movie ratings
+- Add search functionality
+- Add user authentication
+- Improve UI with Bootstrap
+
+---
+
+## Author
+Aranya Majumdar
+
+GitHub:
+https://github.com/aranya-code
