@@ -19,7 +19,7 @@ This project is designed as a learning example to understand Django forms, reque
 - Database: SQLite (default Django database)
 
 ## Project Structure
-
+```
 formsDemo/
 │
 ├── formsDemo/        # Main project configuration
@@ -33,8 +33,7 @@ formsDemo/
 │   ├── templates/
 │
 ├── manage.py         # Django project manager
-
-
+```
 ## Learning Objectives
 - Understand Django form creation
 - Handle user input in web applications
