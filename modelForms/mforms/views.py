@@ -5,7 +5,7 @@ from mforms.models import formCreation
 def index(request):
     return render(request, 'mforms/index.html')
 
-def proucts(request):
+def products(request):
     productsList=formCreation.objects.all()
     return render(request, 'mforms/products.html', {'productsListView':productsList})
 

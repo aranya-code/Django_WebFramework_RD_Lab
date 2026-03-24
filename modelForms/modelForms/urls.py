@@ -20,7 +20,7 @@ from mforms import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
-    path('products/', views.proucts),
-    path('addproduct/', views.addProduct),
+    path('', views.index, name='index'),
+    path('products/', views.products, name='products'),
+    path('add/', views.addProduct, name='add_product'),
 ]
