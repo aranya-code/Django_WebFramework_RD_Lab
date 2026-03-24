@@ -1,0 +1,53 @@
+{% extends 'ToDoApp/base.html' %}
+
+{% block content %}
+
+<style>
+    .box {
+    padding: 50px;
+    text-align: center;
+    }
+
+    table {
+        margin: 0 auto; /* centers table */
+        border-spacing: 40px;
+    }
+
+</style>
+    <div class="box">
+        {% if tasks %}
+        <h2>List of Tasks</h2>
+            <table>
+                <thead>
+                    <th>User Name</th>
+                    <th>Task</th>
+                    <th>Status</th>
+                </thead>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task.name }}</td>
+                    <td>
+                        {% if task.completed %}
+                            <span style="color: green; font-weight: bold;">
+                                <strike>{{ task.task}}</strike>
+                            </span>
+                        {% else %}
+                            {{ task.task }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if task.completed %}
+                            <a href="{% url 'Uncross' task.id %}">Completed</a>
+                        {% else %}
+                            <a href="{% url 'Cross' task.id %}">Not Completed</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h2>NO TASKS HERE</h2>
+        {% endif %}
+    </div>
+    
+{% endblock %}

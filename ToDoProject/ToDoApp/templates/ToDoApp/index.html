@@ -1,0 +1,30 @@
+{% extends 'ToDoApp/base.html' %}
+
+{% block content %}
+
+<style>
+    .centered {
+  text-align: center;     /* center everything inside horizontally */
+}
+</style>
+
+
+    <div class="centered">
+        <h2>Add your Tasks below</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <span style="background-color: rgb(171, 189, 140);" darkolivegreen; font-weight: bold;">
+                    {{message}} <a href="/task_view">View Task</a>
+                </span>
+                
+            {% endfor %}
+        {% endif %}
+        <form method = "POST">
+            {% csrf_token %}
+            <P>User: <input type="text" name="name"></P>
+            <p>Task: <input type="text" name="task"></p>
+            <input type="submit" value="Add Task">
+        </form>
+    </div>
+    
+{% endblock %}
