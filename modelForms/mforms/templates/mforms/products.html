@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products List</title>
+</head>
+<body>
+    <a href="/">Index</a>    
+    <br><br>
+    <a href="/addproduct">Add Products</a>
+    <br><br>
+
+    {% if productsListView %}
+        <table>
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                <th>AssignedTo</th>
+                <th>Priority</th>
+                </tr>
+            </thead>
+            {% for product in productsListView %}
+            <tr>
+                <td> {{ product.name }}</td>
+                <td> {{ product.startDate }}</td>
+                <td> {{ product.endDate }}</td>
+                <td> {{ product.assignedTo }}</td>
+                <td> {{ product.priority }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No Records Found</p>
+    {% endif %}
+</body>
+</html>
