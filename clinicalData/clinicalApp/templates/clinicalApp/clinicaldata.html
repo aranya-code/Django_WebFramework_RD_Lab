@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClinicalData</title>
+</head>
+<body>
+    <h2>Patient Details</h2>
+    <table>
+        Name: {{patient.name}}
+        Age: {{patient.age}}
+    </table>
+    <h2>Patient Clinical Data</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <br>
+        <button type="submit">Add Data</button>
+    </form>
+</body>
+</html>
