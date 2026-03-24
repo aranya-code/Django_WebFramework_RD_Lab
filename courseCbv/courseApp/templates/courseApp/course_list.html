@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Information</title>
+</head>
+<body>
+    {% if course_list %}
+        <table>
+            <thead>
+                <th>Course ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Instructor</th>
+                <th>Rating</th>
+            </thead>
+            {% for course in course_list %}
+                <tr>
+                    <td><a href="{{ course.id }}">{{ course.id }}</a></td>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.description }}</td>
+                    <td>{{ course.instructor }}</td>
+                    <td>{{ course.rating }}</td>
+                    
+                </tr>
+            {% endfor %}
+        </table>
+        <br><br>
+        <a href="/create">Add Course</a><br>             
+    {% else %}
+        <p>No Records Found</p>
+    {% endif %}
+</body>
+</html>
