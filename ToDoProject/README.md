@@ -16,6 +16,7 @@ A simple and clean ToDo application built using **Django**. This project allows 
 
 ## 🏗️ Project Structure
 
+```
 ToDoProject/
 │
 ├── ToDoApp/
@@ -31,6 +32,7 @@ ToDoProject/
 │
 ├── manage.py
 
+```
 ---
 
 ## 🧠 Models
