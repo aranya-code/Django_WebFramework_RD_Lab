@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.studentInfoView.as_view(), name='student'),
     path('<int:pk>/', views.studentDetailsView.as_view(),name='detail'),
-    path('create/', views.studentCreateView.as_view()),
-    path('update/<int:pk>/', views.studentUpdateView.as_view()),
-    path('delete/<int:pk>/', views.studentDeleteView.as_view())
+    path('create/', views.studentCreateView.as_view(), name= 'create'),
+    path('update/<int:pk>/', views.studentUpdateView.as_view(), name='update'),
+    path('delete/<int:pk>/', views.studentDeleteView.as_view(), name='delete'),
 ]
