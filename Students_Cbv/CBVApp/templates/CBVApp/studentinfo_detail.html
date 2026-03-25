@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Detils</title>
+</head>
+<body>
+    <h1>Student Details</h1>
+    <ol>
+        <h3><li>Name: {{ studentinfo.name }}</li></h3>
+        <h3><li>Score: {{ studentinfo.score }}</li></h3>
+        <h3><li><a href="/delete/{{ studentinfo.id }}">Delete</a></li></h3>
+        <h3><li><a href="/update/{{ studentinfo.id }}">Update</a></li></h3>
+    </ol>
+</body>
+</html>
