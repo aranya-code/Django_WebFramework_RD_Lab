@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information</title>
+</head>
+<body>
+    {% if students %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            {% for Student in students %}
+            <tr>
+                <td> {{ Student.id }}</td>
+                <td> {{ Student.name }}</td>
+                <td> {{ Student.score }}</td>
+                <td> <a href="/delete/{{Student.id}}">Delete</a></td>
+                <td> <a href="/update/{{Student.id}}">Update</a></td>
+                
+            </tr>
+            {% endfor %}
+        </table>
+        <br><br>
+        <a href="/create">Add Student</a><br>
+        <a href="/logout">Logout</a>
+    {% else %}
+        <p> No Records Found</p>
+    {% endif %}  
+</body>
+</html>
