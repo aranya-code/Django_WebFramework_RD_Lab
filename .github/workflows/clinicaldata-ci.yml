@@ -1,0 +1,41 @@
+name: Clinicaldata CI
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'clinicalData/**'
+      - '.github/workflows/clinicaldata-ci.yml'
+
+  pull_request:
+    branches: ["main"]
+    paths:
+      - 'clinicalData/**'
+      - '.github/workflows/clinicaldata-ci.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./clinicalData
+
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Django tests
+        run: |
+          python manage.py test
