@@ -1,0 +1,53 @@
+  services:
+    web:
+      build: .
+      command: python manage.py runserver 0.0.0.0:8000
+      volumes:
+        - .:/app
+      ports:
+        - "8000:8000"
+      env_file:        
+        - .env          
+      environment:
+        - DEBUG=1
+
+    app1:
+      build: .
+      command: python manage.py runserver 0.0.0.0:8000
+      volumes:
+        - .:/app
+      env_file:        
+        - .env
+      environment:
+        - DEBUG=1
+        - APP_NAME=App1
+      ports:
+        - "8001:8000"
+
+    app3:
+      build: .
+      command: python manage.py runserver 0.0.0.0:8000
+      volumes:
+        - .:/app
+      env_file:       
+        - .env
+      environment:
+        - DEBUG=1
+        - APP_NAME=App3
+      ports:
+        - "8003:8000"
+
+
+
+    nginx:
+      image: nginx:latest
+      ports:
+        - "8080:80"
+        - "443:443"
+      volumes:
+        - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+        - D:/nginx-certs:/etc/nginx/certs
+      depends_on:
+        - web
+        - app1
+        - app3
