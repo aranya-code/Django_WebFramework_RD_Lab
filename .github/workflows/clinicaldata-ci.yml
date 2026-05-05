@@ -3,15 +3,8 @@ name: Clinicaldata CI
 on:
   push:
     branches: ["main"]
-    paths:
-      - 'clinicalData/**'
-      - '.github/workflows/clinicaldata-ci.yml'
-
   pull_request:
     branches: ["main"]
-    paths:
-      - 'clinicalData/**'
-      - '.github/workflows/clinicaldata-ci.yml'
 
 jobs:
   build:
@@ -21,17 +14,56 @@ jobs:
       run:
         working-directory: ./clinicalData
 
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_DATABASE: ${{ secrets.DB_NAME }}
+          MYSQL_USER: ${{ secrets.DB_USER }}
+          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           cache: "pip"
 
       - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Wait for MySQL
         run: |
-          pip install -r requirements.txt
+          for i in {1..20}; do
+            mysql -h 127.0.0.1 -u $DB_USER -p$DB_PASSWORD -e "SELECT 1" && break
+            echo "Waiting for MySQL..."
+            sleep 3
+          done
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+      - name: Run migrations
+        run: python manage.py migrate
+        env:
+          DB_HOST: 127.0.0.1
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+      - name: Run tests
+        run: python manage.py test
+        env:
+          DB_HOST: 127.0.0.1
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
