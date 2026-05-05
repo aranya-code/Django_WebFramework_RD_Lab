@@ -77,13 +77,15 @@ WSGI_APPLICATION = 'clinicalData.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+DB_HOST = os.getenv("DB_HOST", "db")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('DB_NAME') or "clinic",
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': 'host.docker.internal', 
+        'HOST': 'DB_HOST', 
         'PORT': '3306',
     }
 }
