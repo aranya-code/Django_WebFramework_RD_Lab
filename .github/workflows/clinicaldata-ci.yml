@@ -106,3 +106,4 @@ jobs:
       - name: Push Docker image
         run: |
           docker push aranya3/django-app:latest
+          
