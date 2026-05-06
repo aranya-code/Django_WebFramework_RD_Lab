@@ -38,22 +38,19 @@ jobs:
       DB_USER: django_user
       DB_PASSWORD: django_pass
 
+    defaults:
+      run:
+        working-directory: clinicalData
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Debug repo structure
         run: |
-          echo "Current directory:"
           pwd
-
-          echo "Files in root:"
           ls -la
-
-          echo "Searching requirements.txt:"
           find . -name "requirements.txt"
-
-          echo "Searching manage.py:"
           find . -name "manage.py"
 
       - name: Set up Python
