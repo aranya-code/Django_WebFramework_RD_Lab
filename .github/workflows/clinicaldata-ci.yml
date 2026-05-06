@@ -2,14 +2,15 @@ name: Django CI
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     services:
@@ -26,57 +27,62 @@ jobs:
           - 3306:3306
 
         options: >-
-          --health-cmd="mysqladmin ping -h localhost -u django_user -pdjango_pass"
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -u django_user -pdjango_pass"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
 
-    steps:
+    env:
+      DB_HOST: 127.0.0.1
+      DB_NAME: mydb
+      DB_USER: django_user
+      DB_PASSWORD: django_pass
 
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug files
+      - name: Debug repo structure
         run: |
+          echo "Current directory:"
           pwd
+
+          echo "Files in root:"
           ls -la
+
+          echo "Searching requirements.txt:"
+          find . -name "requirements.txt"
+
+          echo "Searching manage.py:"
+          find . -name "manage.py"
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install MySQL client libraries
+      - name: Install MySQL dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y default-libmysqlclient-dev pkg-config
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Wait for MySQL
         run: |
-          until mysqladmin ping -h 127.0.0.1 -u django_user -pdjango_pass --silent; do
+          until mysqladmin ping -h 127.0.0.1 -u django_user -pdjango_pass --silent
+          do
             echo "Waiting for MySQL..."
             sleep 2
           done
 
       - name: Run migrations
-        env:
-          DB_HOST: 127.0.0.1
-          DB_NAME: mydb
-          DB_USER: django_user
-          DB_PASSWORD: django_pass
         run: |
           python manage.py migrate
 
       - name: Run tests
-        env:
-          DB_HOST: 127.0.0.1
-          DB_NAME: mydb
-          DB_USER: django_user
-          DB_PASSWORD: django_pass
         run: |
           python manage.py test
