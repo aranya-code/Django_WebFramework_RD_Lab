@@ -22,7 +22,7 @@ jobs:
           MYSQL_DATABASE: mydb
           MYSQL_USER: django_user
           MYSQL_PASSWORD: django_pass
-          SECRET_KEY: django_secret_key
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
 
         ports:
           - 3306:3306
