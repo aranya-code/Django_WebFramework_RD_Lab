@@ -76,6 +76,13 @@ jobs:
             sleep 2
           done
 
+      - name: Grant MySQL privileges
+        run: |
+          mysql -h 127.0.0.1 -uroot -proot -e "
+            GRANT ALL PRIVILEGES ON *.* TO 'django_user'@'%';
+            FLUSH PRIVILEGES;
+          "
+
       - name: Run migrations
         run: |
           python manage.py migrate
