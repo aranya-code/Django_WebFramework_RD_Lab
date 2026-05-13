@@ -40,29 +40,52 @@ The application manages **patient records** and their associated **clinical data
 
 ---
 
-# 🏗️ System Architecture
-
-```text
-                    ┌──────────────────┐
-                    │     Client       │
-                    └────────┬─────────┘
-                             │
-                        HTTPS Request
-                             │
-                    ┌────────▼─────────┐
-                    │      NGINX       │
-                    │   API Gateway    │
-                    │ Reverse Proxy    │
-                    └────────┬─────────┘
-                             │
-               ┌─────────────┴─────────────┐
-               │                           │
-       ┌───────▼────────┐         ┌────────▼───────┐
-       │ Django App 1   │         │ Django App 2   │
-       │   (app1)       │         │    (app3)      │
-       └────────────────┘         └────────────────┘
+# ER Diagram
+```mermaid
+erDiagram
+    Patient ||--o{ ClinicalData : "has"
+    
+    Patient {
+        int id PK
+        varchar(50) name
+        int age
+    }
+    
+    ClinicalData {
+        int id PK
+        varchar(20) componentName "Height, Weight, etc."
+        varchar(20) componentValue
+        datetime measuredDate
+        int patient_id FK "Cascade Delete"
+    }
 ```
+# 🏗️ System Architecture
+```mermaid
+graph TD
+    Client([Client]) -->|HTTPS : 443| Nginx[Nginx API Gateway]
+    Client -->|HTTP : 8080| NginxRedirect[HTTP Listener]
+    
+    NginxRedirect -.->|301 Redirect| Nginx
+    
+    subgraph Docker Compose Network
+        Nginx -->|Load Balances| App1(Django App 1 : 8001)
+        Nginx -->|Load Balances| App3(Django App 3 : 8003)
+        
+        App1 --> DB[(MySQL Database : 3307)]
+        App3 --> DB
+        
+        Web(Django Web Container) -.->|Runs Migrations| DB
+    end
 
+    classDef container fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef db fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+    classDef proxy fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
+    
+    class App1,App3,Web container;
+    class DB db;
+    class Nginx,NginxRedirect proxy;
+
+```
 Nginx acts as a reverse proxy and load balancer between multiple Django containers.
 
 ---
